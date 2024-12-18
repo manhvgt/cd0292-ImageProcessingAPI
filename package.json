@@ -1,0 +1,39 @@
+{
+  "name": "cd0292-imageprocessingapi",
+  "version": "1.0.0",
+  "description": "Project To Build an API to processing Image ",
+  "main": "index.js",
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "npm run clean && tsc --build",
+    "start": "node dist/src/index.js",
+    "test": "npm run build && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manhvgt/cd0292-ImageProcessingAPI.git"
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manhvgt/cd0292-ImageProcessingAPI/issues"
+  },
+  "homepage": "https://github.com/manhvgt/cd0292-ImageProcessingAPI#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jasmine": "^5.1.5",
+    "@types/node": "^22.10.2",
+    "@types/supertest": "^6.0.2",
+    "jasmine": "^5.5.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
