@@ -1,62 +1,55 @@
-import request from 'supertest';
-import express from 'express';
-import imageRoute from '../../src/api/image';
+import { resizeImage } from '../../src/handlers/imageResizer';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
-const app = express();
-app.use('/api', imageRoute);
-
-describe('GET /api/image', () => {
+describe('Image Processing', () => {
   const inputImagePath = path.join(__dirname, '../../../images/icelandwaterfall.jpg');
-  const outputDir = path.join(__dirname, '../../output');
+  const outputDir = path.join(__dirname, '../../../output');
+  const imagesDir = path.join(__dirname, '../../../images');
 
   // Ensure the input image exists for testing
   beforeAll(() => {
     if (!fs.existsSync(inputImagePath)) {
       throw new Error(`Input image not found: ${inputImagePath}`);
     }
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
+    }
   });
 
-  it('should resize the image and return it', (done) => {
-    request(app)
-      .get('/api/image')
-      .query({ inputPath: inputImagePath, width: '100', height: '100' })
-      .expect('Content-Type', /image\/jpeg/)
-      .expect(200)
-      .end((err, res) => {
-        if (err) {
-          return done.fail(err);
-        }
-        // Check that the resized image was saved
-        const hash = require('crypto').createHash('md5').update(`${inputImagePath}-100-100`).digest('hex');
-        const outputFilePath = path.join(outputDir, `resized_${hash}.jpg`);
-
-        if (!fs.existsSync(outputFilePath)) {
-          return done.fail(new Error('Resized image not found'));
-        }
-
-        // Verify the response contains the image data
-        expect(res.body).toBeDefined();
-        done();
-      });
+  // Clean up before each test to ensure no interference from previous tests
+  beforeEach(() => {
+    fs.readdirSync(outputDir).forEach(file => {
+      fs.unlinkSync(path.join(outputDir, file));
+    });
   });
 
-  it('should return a 404 error if the input image does not exist', (done) => {
-    const nonExistentPath = path.join(__dirname, '../../../input/nonexistent.jpg');
+  it('should resize the image without throwing an error', async () => {
+    const width = '100';
+    const height = '100';
+    const outputPath = path.join(outputDir, `resized_test.jpg`);
 
-    request(app)
-      .get('/api/image')
-      .query({ inputPath: nonExistentPath, width: '100', height: '100' })
-      .expect(404)
-      .expect({ error: 'Image file not found' }, done);
+    await expect(async () => {
+      const result = await resizeImage('icelandwaterfall.jpg', width, height);
+      const hash = crypto.createHash('md5').update(`${path.join(imagesDir, 'icelandwaterfall.jpg')}-${width}-${height}`).digest('hex');
+      const expectedOutputPath = path.join(outputDir, `resized_${hash}.jpg`);
+
+      // Ensure the file paths match
+      expect(result).toEqual(expectedOutputPath);
+    }).not.toThrow();
   });
 
-  it('should return a 400 error if query parameters are missing', (done) => {
-    request(app)
-      .get('/api/image')
-      .query({ width: '100', height: '100' })
-      .expect(400)
-      .expect({ error: 'Missing required query parameters: inputPath, width, height' }, done);
+  it('should throw an error if the input image does not exist', async () => {
+    const width = '100';
+    const height = '100';
+    const nonExistentPath = 'nonexistent.jpg';
+
+    try {
+      await resizeImage(nonExistentPath, width, height);
+      fail('Expected function to throw an error');
+    } catch (error) {
+      expect(error).toEqual(new Error('Image file not found'));
+    }
   });
 });

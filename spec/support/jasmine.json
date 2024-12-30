@@ -1,5 +1,5 @@
 {
-    "spec_dir": "dist/spec",
+    "spec_dir": "dist/spec/api",
     "spec_files": [
       "**/*[sS]pec.js"
     ],
@@ -8,7 +8,6 @@
     ],
     "env": {
       "stopSpecOnExpectationFailure": false,
-      "random": true,
       "forbidDuplicateNames": true
     }
   }
