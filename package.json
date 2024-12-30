@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "tsc --build --clean",
     "build": "npm run clean && tsc --build",
-    "start": "node dist/src/index.js",
-    "test": "npm run build && jasmine"
+    "start": "nodemon dist/src/index.js",
+    "test": "npm run build && npx jasmine --config=spec/support/jasmine.json"
   },
   "repository": {
     "type": "git",
@@ -29,11 +29,13 @@
     "@types/supertest": "^6.0.2",
     "jasmine": "^5.5.0",
     "jasmine-spec-reporter": "^7.0.0",
+    "nodemon": "^3.1.9",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "sharp": "^0.33.5"
   }
 }
