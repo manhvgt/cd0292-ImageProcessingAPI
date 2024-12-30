@@ -19,11 +19,15 @@ Project Root Directory
 ├── src
 │   ├── api
 │   │   └── image.ts
+│   ├── handlers
+│   │   └── imageResizer.ts
 │   └── index.ts
 ├── .env
 ├── .gitignore
 ├── package.json
 ├── package.json.lock
+├── .eslintrc.yaml
+├── .prettierrc.yml
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 </pre>
@@ -49,6 +53,8 @@ To install, run... Please go to project dirrectory and run below command on term
     `npm start`
 
   - Start the app using below api url. You can replace INPUT_IMAGE_PATH by actual image path and/or change width/height.\
+    It is OK to put image filename instead of full path, it will be auto redirected to default image directory.\
+    API parameters will be validated and an error will be returned in case of invalid parameter.\
   `http://localhost:3000/api/image?inputPath=INPUT_IMAGE_PATH&width=400&height=400`\
   
 ## Future development
