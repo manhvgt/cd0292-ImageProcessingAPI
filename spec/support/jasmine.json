@@ -1,14 +1,9 @@
 {
-    "spec_dir": "dist/spec/api",
-    "spec_files": [
-      "**/*[sS]pec.js"
-    ],
-    "helpers": [
-      "helpers/**/*.js"
-    ],
-    "env": {
-      "stopSpecOnExpectationFailure": false,
-      "forbidDuplicateNames": true
-    }
+  "spec_dir": "dist/spec/api",
+  "spec_files": ["**/*[sS]pec.js"],
+  "helpers": ["helpers/**/*.js"],
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "forbidDuplicateNames": true
   }
-  
+}

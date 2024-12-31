@@ -15,7 +15,11 @@ if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir);
 }
 
-export const resizeImage = async (inputPath: string, width: string, height: string): Promise<string> => {
+export const resizeImage = async (
+  inputPath: string,
+  width: string,
+  height: string
+): Promise<string> => {
   // If inputPath is a filename, redirect to the images directory
   if (!path.isAbsolute(inputPath)) {
     inputPath = path.join(imagesDir, inputPath);
@@ -33,7 +37,10 @@ export const resizeImage = async (inputPath: string, width: string, height: stri
   }
 
   // Generate a hash based on the input parameters
-  const hash = crypto.createHash('md5').update(`${inputPath}-${width}-${height}`).digest('hex');
+  const hash = crypto
+    .createHash('md5')
+    .update(`${inputPath}-${width}-${height}`)
+    .digest('hex');
   const outputFileName = `resized_${hash}.jpg`;
   const outputPath = path.join(outputDir, outputFileName);
 
@@ -43,19 +50,30 @@ export const resizeImage = async (inputPath: string, width: string, height: stri
   }
 
   // Resize the image and save it locally
-  await sharp(inputPath)
-    .resize(widthNum, heightNum)
-    .toFile(outputPath);
+  await sharp(inputPath).resize(widthNum, heightNum).toFile(outputPath);
 
   return outputPath;
 };
 
-export const validateDimensions = (width: string, height: string): { valid: boolean, error?: string } => {
+export const validateDimensions = (
+  width: string,
+  height: string
+): { valid: boolean; error?: string } => {
   const widthInt = parseInt(width);
   const heightInt = parseInt(height);
 
-  if (isNaN(widthInt) || isNaN(heightInt) || !/^\d+$/.test(width) || !/^\d+$/.test(height) || widthInt <= 0 || heightInt <= 0) {
-    return { valid: false, error: 'Width and height must be positive numbers.' };
+  if (
+    isNaN(widthInt) ||
+    isNaN(heightInt) ||
+    !/^\d+$/.test(width) ||
+    !/^\d+$/.test(height) ||
+    widthInt <= 0 ||
+    heightInt <= 0
+  ) {
+    return {
+      valid: false,
+      error: 'Width and height must be positive numbers.',
+    };
   }
 
   return { valid: true };

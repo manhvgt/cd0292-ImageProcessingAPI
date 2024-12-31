@@ -4,7 +4,10 @@ import path from 'path';
 import crypto from 'crypto';
 
 describe('Image Processing', () => {
-  const inputImagePath = path.join(__dirname, '../../../images/icelandwaterfall.jpg');
+  const inputImagePath = path.join(
+    __dirname,
+    '../../../images/icelandwaterfall.jpg'
+  );
   const outputDir = path.join(__dirname, '../../../output');
   const imagesDir = path.join(__dirname, '../../../images');
 
@@ -20,7 +23,7 @@ describe('Image Processing', () => {
 
   // Clean up before each test to ensure no interference from previous tests
   beforeEach(() => {
-    fs.readdirSync(outputDir).forEach(file => {
+    fs.readdirSync(outputDir).forEach((file) => {
       fs.unlinkSync(path.join(outputDir, file));
     });
   });
@@ -28,11 +31,15 @@ describe('Image Processing', () => {
   it('should resize the image without throwing an error', async () => {
     const width = '100';
     const height = '100';
-    const outputPath = path.join(outputDir, `resized_test.jpg`);
 
     await expect(async () => {
       const result = await resizeImage('icelandwaterfall.jpg', width, height);
-      const hash = crypto.createHash('md5').update(`${path.join(imagesDir, 'icelandwaterfall.jpg')}-${width}-${height}`).digest('hex');
+      const hash = crypto
+        .createHash('md5')
+        .update(
+          `${path.join(imagesDir, 'icelandwaterfall.jpg')}-${width}-${height}`
+        )
+        .digest('hex');
       const expectedOutputPath = path.join(outputDir, `resized_${hash}.jpg`);
 
       // Ensure the file paths match

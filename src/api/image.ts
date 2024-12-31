@@ -9,15 +9,28 @@ router.get('/image', async (req: Request, res: Response) => {
   const { inputPath, width, height } = req.query;
 
   if (!inputPath || !width || !height) {
-    return res.status(400).json({ error: 'Missing required query parameters: inputPath, width, height' });
+    return res
+      .status(400)
+      .json({
+        error: 'Missing required query parameters: inputPath, width, height',
+      });
   }
-  if (typeof inputPath !== 'string' || typeof width !== 'string' || typeof height !== 'string') {
-    return res.status(400).json({ error: 'Invalid query parameters. inputPath, width, and height must be strings.' });
+  if (
+    typeof inputPath !== 'string' ||
+    typeof width !== 'string' ||
+    typeof height !== 'string'
+  ) {
+    return res
+      .status(400)
+      .json({
+        error:
+          'Invalid query parameters. inputPath, width, and height must be strings.',
+      });
   }
-  
+
   // Validate width and height
   const { valid, error } = validateDimensions(width, height);
-  if( !valid ) {
+  if (!valid) {
     return res.status(400).json({ error });
   }
 
@@ -36,7 +49,6 @@ router.get('/image', async (req: Request, res: Response) => {
     }
     res.status(500).json({ error: 'Failed to resize image' });
   }
-
 });
 
 export default router;

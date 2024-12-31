@@ -1,23 +1,19 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "rootDir": "./",
-        "target": "es6",
-        "module": "commonjs",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "types": ["node", "jasmine"],
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "jsx": "react",
-        "allowJs": true,
-        "moduleResolution": "node"
-    },
-    "include": [
-        "src/**/*.ts",
-        "spec/**/*.ts"
-    ],
-  }
-  
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "rootDir": "./",
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jasmine"],
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*.ts", "spec/**/*.ts"]
+}
